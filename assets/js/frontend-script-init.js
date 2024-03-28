@@ -4,6 +4,7 @@ var cf_jsfields_init, cf_presubmit;
 
 	// validation
 	cf_validate_form = function( form ){
+		$(form).find('.caldera_ajax_error_block').remove();
 		return form.parsley({
 			errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
 			errorTemplate : '<span></span>',

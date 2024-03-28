@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.10.6 - 2024-01-25 */var resBaldrickTriggers;
+/*! GENERATED SOURCE FILE caldera-forms - v1.10.7 - 2024-03-28 */var resBaldrickTriggers;
 
 jQuery(function($){
 	function fieldErrors(fields, $form, $notice) {
@@ -8092,6 +8092,7 @@ var cf_jsfields_init, cf_presubmit;
 
 	// validation
 	cf_validate_form = function( form ){
+		$(form).find('.caldera_ajax_error_block').remove();
 		return form.parsley({
 			errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
 			errorTemplate : '<span></span>',

@@ -42,13 +42,11 @@
 
 ?><?php echo $wrapper_before; ?>
 	<?php echo $field_label; ?>
-	<?php echo $field_before; ?>
-		<div id="<?php echo esc_attr( $field_id ); ?>_file_list" class="cf-multi-uploader-list"></div>
-		<?php if( !empty( $field['config']['multi_upload'] ) ){ ?>
-			<button type="button" class="btn btn-block cf-uploader-trigger" data-parent="<?php echo esc_attr( $field_id ); ?>"><?php echo esc_html( $field['config']['multi_upload_text'] ); ?></button>
-		<?php } ?>
-		<input <?php echo $attr_string . '  ' . $field_required . '  ' . $field_structure['aria']; ?>>
-		<input type="hidden" name="<?php echo esc_attr( $field_name ); ?>" value="<?php echo esc_attr( $uniqu_code ); ?>">
-		<?php echo $field_caption; ?>
-	<?php echo $field_after; ?>
+	<div id="<?php echo esc_attr( $field_id ); ?>_file_list" class="cf-multi-uploader-list"></div>
+	<?php if( !empty( $field['config']['multi_upload'] ) ){ ?>
+		<button type="button" class="btn btn-block cf-uploader-trigger" data-parent="<?php echo esc_attr( $field_id ); ?>"><?php echo esc_html( $field['config']['multi_upload_text'] ); ?></button>
+	<?php } ?>
+	<input <?php echo $attr_string . '  ' . $field_required . '  ' . $field_structure['aria']; ?>>
+	<input type="hidden" name="<?php echo esc_attr( $field_name ); ?>" value="<?php echo esc_attr( $uniqu_code ); ?>">
+	<?php echo $field_caption; ?>
 <?php echo $wrapper_after; ?>

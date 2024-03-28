@@ -22,7 +22,7 @@ function cf_handle_multi_view( $data, $field ){
 		if( !isset( $viewer[$key] ) ){
 			$viewer[$key] = $value;
 		}
-		
+
 	}
 	return implode( ', ', $viewer );
 
@@ -49,32 +49,35 @@ function cf_handle_file_upload( $entry, $field, $form ){
 	}
 
 	// check transdata if string based entry
-	if( is_string( $entry ) ){
+	if ( is_string( $entry ) ){
 		$transdata = Caldera_Forms_Transient::get_transient( $entry );
 
-		if( !empty( $transdata ) ){
+		if( ! empty( $transdata ) ){
 			Caldera_Forms_Transient::delete_at_submission_complete( $entry );
 			return $transdata;
 		}
-
 	}
 
-	if( isset($_POST[ '_cf_frm_edt' ] ) ) {
+	if ( isset($_POST[ '_cf_frm_edt' ] ) ) {
 		if ( ! isset( $_FILES )
 		     || ( isset( $_FILES[ $field[ 'ID' ] ][ 'size' ][0] ) && 0 == $_FILES[ $field[ 'ID' ] ][ 'size' ][0] )
-			|| ( isset( $_FILES[ $field[ 'ID' ] ][ 'size' ] ) && 0 == $_FILES[ $field[ 'ID' ] ][ 'size' ]  )
+				 || ( isset( $_FILES[ $field[ 'ID' ] ][ 'size' ] ) && 0 == $_FILES[ $field[ 'ID' ] ][ 'size' ]  )
 		) {
 			$entry = Caldera_Forms::get_field_data( $field[ 'ID' ], $form, absint( $_POST[ '_cf_frm_edt' ] ) );
-
 			return $entry;
 		}
 	}
+
 	$required = false;
 	if ( isset( $field[ 'required' ] ) &&  $field[ 'required' ] ){
 		$required = true;
 	}
-	if(!empty($_FILES[$field['ID']]['size'])){
 
+	if ( !empty($_FILES[$field['ID']]['name']) && empty( $_FILES[$field['ID']]['size'] ) && ! empty($_SERVER['CONTENT_LENGTH']) ){
+		return new WP_Error( 400, __( 'File exceeds the server file upload limit.', 'caldera-forms' ) );
+	}
+
+	if ( ! empty( $_FILES[$field['ID']]['size'] ) ) {
 		// build wp allowed types
 		$allowed = get_allowed_mime_types();
 		$wp_allowed = array();
@@ -95,7 +98,7 @@ function cf_handle_file_upload( $entry, $field, $form ){
 					$field['config']['allowed'][ $ext ] = true;
 				}
 			}
-		}else{
+		} else {
 			//set allowed to only what wp allows
 			$field['config']['allowed'] = $wp_allowed;
 		}
@@ -112,9 +115,9 @@ function cf_handle_file_upload( $entry, $field, $form ){
 		}
 
 		if ( ! function_exists( 'wp_handle_upload' ) ) {
-		    require_once( ABSPATH . 'wp-admin/includes/file.php' );
-        }
-		
+    	require_once( ABSPATH . 'wp-admin/includes/file.php' );
+    }
+
 		$files = array();
 		foreach( (array) $_FILES[$field['ID']] as $file_key=>$file_parts ){
 			foreach( (array) $file_parts as $part_index=>$part_value ){
@@ -128,19 +131,23 @@ function cf_handle_file_upload( $entry, $field, $form ){
 				continue;
 			}
 
-            if( ! Caldera_Forms_Files::is_private( $field ) ){
-                $upload_args = array(
-                    'private' => false,
-                    'field_id' => $field['ID'],
-                    'form_id' => $form['ID']
-                );
-            }else{
-                $upload_args = array(
-                    'private' => true,
-                    'field_id' => $field['ID'],
-                    'form_id' => $form['ID']
-                );
-            }
+      if( ! Caldera_Forms_Files::is_private( $field ) ){
+          $upload_args = array(
+              'private' => false,
+              'field_id' => $field['ID'],
+              'form_id' => $form['ID']
+          );
+      } else {
+          $upload_args = array(
+              'private' => true,
+              'field_id' => $field['ID'],
+              'form_id' => $form['ID']
+          );
+      }
+
+			if ( ! empty( $field['config']['max_upload'] ) && $file['size'] > $field['config']['max_upload'] ){
+				return new WP_Error( 'fail', __('The file exceeds the size limit.', 'caldera-forms') );
+			}
 
 			$uploader = Caldera_Forms_Files::get_upload_handler( $form, $field );
 			if( is_callable( $uploader) ){
@@ -170,21 +177,19 @@ function cf_handle_file_upload( $entry, $field, $form ){
 		return $uploads[0];
 	}else{
 		// for multiples
-		if( is_array( $entry ) ){
-			foreach( $entry as $index => $line ){
-				if( !filter_var( $line, FILTER_VALIDATE_URL ) ){
+		if ( is_array( $entry ) ) {
+			foreach( $entry as $index => $line ) {
+				if ( ! filter_var( $line, FILTER_VALIDATE_URL ) ){
 					unset( $entry[ $index ] );
 				}
 			}
 			return $entry;
-		}else{
+		} else {
 			if( filter_var( $entry, FILTER_VALIDATE_URL ) ){
 				return $entry;
 			}
 		}
-
 	}
-
 }
 
 

@@ -1,17 +1,62 @@
 <?php
 /*
- * Ajax Submissions 
+ * Ajax Submissions
  */
-
 
 //add_filter('caldera_forms_render_grid_structure', 'cf_ajax_structures', 10, 2);
 add_action('caldera_forms_redirect', 'cf_ajax_redirect', 10, 4 );
 add_filter('caldera_forms_render_form_classes', 'cf_ajax_register_scripts', 10, 2);
 add_action('caldera_forms_general_settings_panel', 'cf_form_ajaxsetup');
+
 // add ajax actions
 add_action( 'wp_ajax_cf_process_ajax_submit', 'cf_form_process_ajax' );
 add_action( 'wp_ajax_nopriv_cf_process_ajax_submit', 'cf_form_process_ajax' );
+add_action( 'caldera_forms_buffer_started', 'cf_form_validate_file_upload_limits', 0 );
 
+function cf_form_return_bytes($val){
+  $val  = trim($val);
+
+  if (is_numeric($val))
+      return $val;
+
+  $last = strtolower($val[strlen($val)-1]);
+  $val  = substr($val, 0, -1); // necessary since PHP 7.1; otherwise optional
+
+  switch($last) {
+    case 'g':
+      $val *= 1024;
+    case 'm':
+      $val *= 1024;
+    case 'k':
+      $val *= 1024;
+  }
+  return $val;
+}
+
+function cf_form_validate_file_upload_limits(){
+	if ($_SERVER[ 'REQUEST_METHOD' ] !== 'POST') return;
+
+	if ( ! empty( $_SERVER['CONTENT_LENGTH'] ) ){
+		$post_max_size = ini_get( 'post_max_size');
+		if ( $_SERVER['CONTENT_LENGTH'] > cf_form_return_bytes($post_max_size) ) {
+
+			$form = Caldera_Forms_Forms::get_form(0);
+			$note_general_classes = Caldera_Forms_Render_Notices::get_note_general_classes($form);
+			$note_classes = Caldera_Forms_Render_Notices::get_note_classes($note_general_classes, $form);
+
+			$notices = array( 'error' => array( 'note' =>
+				sprintf( __( 'Files exceed the post size limit of %s.', 'caldera-forms' ), $post_max_size )
+			));
+
+			status_header(400);
+			caldera_forms_send_json( array(
+				'html' => Caldera_Forms_Render_Notices::html_from_notices($notices, $note_classes),
+			), true );
+
+			die();
+		}
+	}
+}
 
 function cf_form_process_ajax(){
 	// hook into submision
@@ -23,7 +68,6 @@ function cf_form_process_ajax(){
 
 	Caldera_Forms::process_form_via_post();
 }
-
 
 function cf_form_ajaxsetup($form){
 	if( !isset( $form['custom_callback'] ) ){
@@ -52,7 +96,7 @@ function cf_form_ajaxsetup($form){
 </div>
 
 <div id="custom_callback_panel" <?php if(empty($form['has_ajax_callback'])){ echo 'style="display:none;"'; } ?>>
-	
+
 	<div class="caldera-config-group">
 		<fieldset>
 			<legend>
@@ -76,7 +120,7 @@ function cf_form_ajaxsetup($form){
 					<?php esc_html_e('Javascript function to call on submission. Passed an object containing form submission result.', 'caldera-forms' ); ?> <a href="#" onclick="jQuery('#json_callback_example').toggle();return false;"><?php esc_html_e( 'See Example', 'caldera-forms' ); ?></a>
 				</p>
 					<pre id="json_callback_example" style="display:none;"><?php echo htmlentities('
-{    
+{
     "data": {
         "cf_id"		: "200", // Form Entry ID
         "my_var" 	: "custom passback variable defined in variables tab",
@@ -112,7 +156,7 @@ function cf_form_ajaxsetup($form){
 		</div>
 	</fieldset>
 </div>
-<?php	
+<?php
 }
 
 
@@ -128,7 +172,7 @@ function cf_ajax_redirect($type, $url, $form){
 	}
 
 	$data = Caldera_Forms::get_submission_data($form);
-	
+
 	// setup notcies
 	$urlparts = parse_url($url);
 	$query = array();
@@ -205,7 +249,7 @@ function cf_ajax_redirect($type, $url, $form){
 	$out['html'] = Caldera_Forms_Sanitize::remove_scripts($html);
 	$out['type'] = ( isset($data['type']) ? $data['type'] : $type );
 	$out['form_id'] = $form['ID'];
-	$out['form_name'] = $form['name'];	
+	$out['form_name'] = $form['name'];
 	$out['status'] = $type;
 
 	if( ! empty( $form[ 'scroll_top' ] ) ){
@@ -240,7 +284,7 @@ function cf_ajax_setatts($atts, $form){
 	if ( isset( $form[ 'form_ajax_post_submission_disable' ] ) ) {
 		$post_disable = $form[ 'form_ajax_post_submission_disable' ];
 	}
-	
+
 	$resatts = array(
 		'data-target'		=>	'#caldera_notices_'.$current_form_count,
 		'data-template'		=>	'#cfajax_'.$form['ID'].'-tmpl',
@@ -251,7 +295,7 @@ function cf_ajax_setatts($atts, $form){
 		'data-action'		=>	'cf_process_ajax_submit',
 		'data-request'		=>	cf_ajax_api_url( $form[ 'ID' ] ),
 	);
-	
+
 	if( !empty( $form['custom_callback'] ) ){
 		$resatts['data-custom-callback'] = $form['custom_callback'];
 	}
@@ -277,7 +321,7 @@ function cf_ajax_setatts($atts, $form){
  * @return string
  */
 function cf_ajax_api_url( $form_id ) {
-	
+
 	return Caldera_Forms::get_submit_url( $form_id );
 
 }

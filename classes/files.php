@@ -33,31 +33,30 @@ class Caldera_Forms_Files{
      * @return array
      */
     public static function upload( $file, array  $args = array() ){
-        $args = wp_parse_args($args, array(
-            'private' => false,
-            'field_id' => null,
-            'form_id' => null,
-			'transient_id' => null,
-        ));
-        if( true == $args[ 'private' ] && ! empty( $args[ 'field_id' ] ) && ! empty( $args[ 'form_id' ] )){
-            $private = true;
-        }else{
-            $private = false;
-        }
+      $args = wp_parse_args($args, array(
+          'private' => false,
+          'field_id' => null,
+          'form_id' => null,
+		      'transient_id' => null,
+      ));
 
+      if ( true == $args[ 'private' ] && ! empty( $args[ 'field_id' ] ) && ! empty( $args[ 'form_id' ] )){
+          $private = true;
+      } else {
+          $private = false;
+      }
 
 	    self::add_upload_filter( $args[ 'field_id' ],  $args[ 'form_id' ], $private, $args[ 'transient_id' ] );
 
-        $upload = wp_handle_upload($file, array( 'test_form' => false, 'foo' => 'bnar' ) );
+      $upload = wp_handle_upload( $file, array( 'test_form' => false, 'foo' => 'bnar' ) );
 
-        if( $private ){
-            self::remove_upload_filter();
-        }
+      if ( $private ) {
+        self::remove_upload_filter();
+      }
 
-		self::schedule_delete($args, $private, $upload);
+		  self::schedule_delete($args, $private, $upload);
 
-		return $upload;
-
+      return $upload;
     }
 
     /**
@@ -99,7 +98,7 @@ class Caldera_Forms_Files{
 	     * @param int|bool Attachment ID or false if upload failed
 	     * @param array $field Field config
 	     */
-		do_action( 'caldera_forms_file_added_to_media_library', $media_id, $field );
+		     do_action( 'caldera_forms_file_added_to_media_library', $media_id, $field );
 	    return $media_id;
     }
 
@@ -323,6 +322,7 @@ class Caldera_Forms_Files{
 	 */
 	public static function is_file_too_large( array  $field, $file )
 	{
+    print_r($field); die();
 
 		return 0 !== self::get_max_upload_size($field) && self::get_max_upload_size($field) < $file['size'];
 
@@ -411,20 +411,17 @@ class Caldera_Forms_Files{
 	 *
 	 * @return bool
 	 */
-	public static function schedule_delete($field_id, $form_id, $file )
-	{
+	public static function schedule_delete($field_id, $form_id, $file ){
 		$form = Caldera_Forms_Forms::get_form($form_id);
 		if ( is_array($form) ) {
 			$field = Caldera_Forms_Field_Util::get_field($field_id, $form);
-      $fileName = ! empty( $file[ 'name' ] ) ? $file[ 'name' ] : basename($file[ 'tmp_name' ]);
+      $fileName = ! empty( $file[ 'name' ] ) ? $file[ 'name' ] : basename($file[ 'file' ]);
 			if ( is_array($field) && !self::is_persistent($field) ) {
 				caldera_forms_schedule_job(new \calderawp\calderaforms\cf2\Jobs\DeleteFileJob($fileName));
 				return true;
 			}
 		}
-
 		return false;
-
 	}
 
 }
