@@ -75,6 +75,7 @@ class DeleteFileJob extends Job
 	 */
 	protected function dirName()
 	{
-		return dirname($this->path);
-	}
+		if ( is_string( $this->path )  )
+			return dirname($this->path);
+		else return false;	}
 }

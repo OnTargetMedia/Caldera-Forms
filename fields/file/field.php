@@ -28,10 +28,9 @@
         'name' => $field_name,
         'value' => $field_value,
         'data-field' => $field_base_id,
-        'class' => $field_class,
+        'class' => 'form-control',
         'id' => $field_id,
         'data-controlid' => $uniqu_code,
-
     );
 
     if( $is_multiple ){
