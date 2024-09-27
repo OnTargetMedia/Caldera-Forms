@@ -338,9 +338,7 @@ class Caldera_Forms_Render_Assets
 	{
 		self::maybe_register();
 
-
 		self::enqueue_form_assets();
-
 
 		foreach (self::get_field_styles() as $style) {
 			self::enqueue_style($style);
@@ -527,7 +525,6 @@ class Caldera_Forms_Render_Assets
 			return Caldera_Forms_Admin_Assets::enqueue_script($script);
 		}
 
-
 		if (in_array($script, ['validator', self::make_slug('validator')])) {
 			$scripts = self::get_core_scripts();
 			wp_enqueue_script(self::make_slug('validator'), $scripts[ 'validator' ], [], CFCORE_VER, false);
@@ -707,7 +704,7 @@ class Caldera_Forms_Render_Assets
 				self::enqueue_script('legacy-bundle');
 			}
 			$tags = [self::make_slug( 'legacy-bundle' )];
-		}else {
+		} else {
 
 		    //Get the json file listing dependencies for this client.
             //Generate with wordpress-scripts by running `yarn build:clients` or `yarn build`.
@@ -723,8 +720,8 @@ class Caldera_Forms_Render_Assets
             $tags =  is_array($assets) && isset($assets['dependencies']) ? $assets['dependencies'] : [];
         }
 
-		foreach ( $tags as $_tag ){
-            if( ! wp_script_is($_tag, 'registered')){
+				foreach ( $tags as $_tag ){
+            if ( ! wp_script_is($_tag, 'registered')){
                 global $wp_scripts;
                 wp_default_packages_vendor( $wp_scripts );
                 wp_default_packages_scripts( $wp_scripts );
@@ -732,9 +729,11 @@ class Caldera_Forms_Render_Assets
             }
         }
         //this should not be needed, but it seams to be only way to get react on the page
-        foreach ($tags as $t) {
-            wp_enqueue_script($t);
-        }
+				if (is_admin()){
+					foreach ($tags as $t) {
+						wp_enqueue_script($t);
+					}
+				}
 
 		return $tags;
 	}
@@ -750,8 +749,10 @@ class Caldera_Forms_Render_Assets
 		self::maybe_validator_i18n(false);
 		self::enqueue_script('validator');
 		self::enqueue_script('init');
-		self::enqueue_script('render', self::cf_dependencies('render') );
-		self::enqueue_style('render');
+		if (is_admin()){
+			self::enqueue_script('render', self::cf_dependencies('render') );
+			self::enqueue_style('render');
+		}
 
 		$should_minify = self::should_minify();
 		if ($should_minify) {

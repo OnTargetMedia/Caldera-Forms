@@ -57,21 +57,20 @@ module.exports = function (grunt) {
 
     //Include webpacked clients
     [
-        'admin',
+    'admin',
 		'blocks',
-        'components',
-        'form-builder',
-        'functions',
+    'components',
+    'form-builder',
+    'functions',
 		'privacy',
-        'pro',
-        'render',
-        'state',
-        'viewer'
+    'pro',
+    'render',
+    'state',
+    'viewer'
     ].forEach( (client) => {
        files_list.push( `clients/${client}/build/index.min.js` );
        files_list.push( `clients/${client}/build/style.min.css` );
        files_list.push( `clients/${client}/build/index.min.asset.json` );
-       files_list.push( `clients/${client}/build/index.min.asset.php` );
     });
 
     require( 'load-grunt-tasks' )( grunt );

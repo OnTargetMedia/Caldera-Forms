@@ -91,7 +91,7 @@ class Caldera_Forms_Field_Localizer {
 			$wp_scripts = wp_scripts();
 			wp_localize_script( $slug, 'CFFIELD_CONFIG', $data );
 
-			$wp_scripts->print_extra_script( $slug, true );
+			// $wp_scripts->print_extra_script( $slug, true );
 
 		}
 	}

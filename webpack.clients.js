@@ -56,11 +56,11 @@ const entry = entryPointNames.reduce((memo, entryPointName) => {
  */
 const cssPlugin = new MiniCssExtractPlugin({
 	filename: isProduction
-		? "./clients/[name]/build/style.min.css"
-		: "./clients/[name]/build/style.[hash].css",
+		? "../clients/[name]/build/style.min.css"
+		: "../clients/[name]/build/style.[hash].css",
 	chunkFilename: isProduction
-		? "./clients/[name]/build/[id].css"
-		: "./clients/[name]/build/[id].[hash].css",
+		? "../clients/[name]/build/[id].css"
+		: "../clients/[name]/build/[id].[hash].css",
 });
 
 /**
@@ -149,8 +149,8 @@ const devServer = {
 const output = {
 	//filename: '../clients/[name]/build/index.min.js',
 	filename: isProduction
-		? "./clients/[name]/build/index.min.js"
-		: "./clients/[name]/build/index.[hash].js",
+		? "../clients/[name]/build/index.min.js"
+		: "../clients/[name]/build/index.[hash].js",
 	library: ["calderaForms", "[name]"],
 	libraryTarget: "this",
 	// hotUpdateChunkFilename: "../dist/caldera-hot-load/[name].[hash].js",
