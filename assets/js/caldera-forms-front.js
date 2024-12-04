@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.11.0 - 2024-09-27 */var resBaldrickTriggers;
+/*! GENERATED SOURCE FILE caldera-forms - v1.11.2 - 2024-12-03 */var resBaldrickTriggers;
 
 jQuery(function($){
 	function fieldErrors(fields, $form, $notice) {
@@ -8512,8 +8512,22 @@ window.addEventListener("load", function(){
 		}
 
 
-
-
+		/**
+		 * dynamic nonce to allow longer page cache
+		 *
+		 * @since 1.11.1
+		 *
+		 * @param $ {jQuery}
+		 */
+		(function($) {
+			var loaded = {};
+				$( '.caldera_forms_form' ).each(function( index, item ) {
+			 	var formid = $(item).data('cfajax')
+			 	if ( formid && ! loaded[formid] ) {
+			 		$r = new CalderaFormsResetNonce( formid, CF_API_DATA, $).init()
+			 	}
+			});
+		})();
 
 	})( jQuery );
 
@@ -8576,6 +8590,9 @@ function CalderaFormsFieldSync( $field, binds, $form, $, state  ){
 
 	}
 }
+
+
+
 
 /**
  * Handles nonce refresh for forms

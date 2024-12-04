@@ -363,10 +363,10 @@ class Caldera_Forms_Fields {
 					),
 				),
 				"scripts"     => array(
-					CFCORE_URL . "fields/star-rate/jquery.raty.js",
+					CFCORE_URL . "fields/star-rate/jquery.raty.min.js",
 				),
 				"styles"      => array(
-					CFCORE_URL . "fields/star-rate/cf-raty.css",
+					CFCORE_URL . "fields/star-rate/cf-raty.min.css",
 				),
 			),
 			'utm' => array(
@@ -560,10 +560,10 @@ class Caldera_Forms_Fields {
 					),
 				),
 				"styles"     => array(
-					CFCORE_URL . "fields/date_picker/css/datepicker.css",
+					CFCORE_URL . "fields/date_picker/css/datepicker.min.css",
 				),
 				"scripts"      => array(
-					CFCORE_URL . "fields/date_picker/cf-datepicker.js",
+					CFCORE_URL . "fields/date_picker/cf-datepicker.min.js",
 				)
 			),
 			'toggle_switch'    => array(

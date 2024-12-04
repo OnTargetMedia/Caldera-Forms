@@ -1105,7 +1105,7 @@ class Caldera_Forms_Render_Assets
 		//Use correct formatted locale for file to be matched
 		$locale = self::set_locale_code($locale);
 
-		$validator_url = CFCORE_URL . 'assets/js/i18n/' . $locale . '.js';
+		$validator_url = CFCORE_URL . 'assets/build/js/i18n/' . $locale . '.js';
 		return $validator_url;
 
 	}
@@ -1121,15 +1121,15 @@ class Caldera_Forms_Render_Assets
 	 */
 	public static function set_locale_code($locale)
 	{
-		if (file_exists(CFCORE_PATH . 'assets/js/i18n/' . $locale . '.js')) {
+		if (file_exists(CFCORE_PATH . 'assets/build/js/i18n/' . $locale . '.js')) {
 			// no need to check other possibilities- break if/else early
-		} elseif (file_exists(CFCORE_PATH . 'assets/js/i18n/' . strtolower($locale) . '.js')) {
+		} elseif (file_exists(CFCORE_PATH . 'assets/build/js/i18n/' . strtolower($locale) . '.js')) {
 			$locale = strtolower($locale);
-		} elseif (file_exists(CFCORE_PATH . 'assets/js/i18n/' . strtolower(str_replace('_', '-', $locale)) . '.js')) {
+		} elseif (file_exists(CFCORE_PATH . 'assets/build/js/i18n/' . strtolower(str_replace('_', '-', $locale)) . '.js')) {
 			$locale = strtolower(str_replace('_', '-', $locale));
-		} elseif (file_exists(CFCORE_PATH . 'assets/js/i18n/' . strtolower(substr($locale, 0, 2)) . '.js')) {
+		} elseif (file_exists(CFCORE_PATH . 'assets/build/js/i18n/' . strtolower(substr($locale, 0, 2)) . '.js')) {
 			$locale = strtolower(substr($locale, 0, 2));
-		} elseif (file_exists(CFCORE_PATH . 'assets/js/i18n/' . strtolower(substr($locale, 3)) . '.js')) {
+		} elseif (file_exists(CFCORE_PATH . 'assets/build/js/i18n/' . strtolower(substr($locale, 3)) . '.js')) {
 			$locale = strtolower(substr($locale, 3));
 		} else {
 			//No file is matching the locale in validation folder,

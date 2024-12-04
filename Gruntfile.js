@@ -132,6 +132,16 @@ module.exports = function (grunt) {
                     ext: '.min.js'
                 }]
             },
+            i18n: {
+                files: [{
+                    sourceMap: true,
+                    expand: true,
+                    cwd: 'assets/js/i18n',
+                    src: '*.js',
+                    dest: 'assets/build/js/i18n/',
+                    ext: '.js'
+                }]
+            },
             viewer: {
                 files: [{
                     sourceMap: true,
@@ -256,14 +266,6 @@ module.exports = function (grunt) {
                 flatten: true,
                 filter: 'isFile'
             },
-            i18n: {
-                expand: true,
-                cwd: 'assets/js/i18n/',
-                src: '*',
-                dest: 'assets/build/js/i18n/',
-                flatten: true,
-                filter: 'isFile'
-            },
             images: {
                 expand: true,
                 cwd: 'assets/images',
@@ -306,7 +308,7 @@ module.exports = function (grunt) {
 
     });
 
-    grunt.registerTask( 'buildCopy', [ 'copy:i18n', 'copy:fonts', 'copy:images'] );
+    grunt.registerTask( 'buildCopy', [ 'copy:fonts', 'copy:images'] );
     //register default task
     grunt.registerTask( 'default',  [
         'js',
