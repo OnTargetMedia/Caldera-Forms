@@ -431,12 +431,12 @@ window.addEventListener("load", function(){
 		 *
 		 * @param $ {jQuery}
 		 */
-		(function($) {
+		(function() {
 			var loaded = {};
 				$( '.caldera_forms_form' ).each(function( index, item ) {
 			 	var formid = $(item).data('cfajax')
 			 	if ( formid && ! loaded[formid] ) {
-			 		$r = new CalderaFormsResetNonce( formid, CF_API_DATA, $).init()
+			 		new CalderaFormsResetNonce( formid, CF_API_DATA, $).init()
 			 	}
 			});
 		})();
