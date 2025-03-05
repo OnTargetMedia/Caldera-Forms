@@ -109,42 +109,44 @@ if( ! defined( 'ABSPATH' ) ){
 	jQuery(function($){
 
 		init_cf_baldrick = function(){
-			$('.cfajax-trigger').baldrick({
-				before			: function(el, ev){
+			if ( $().baldrick ) {
+				$('.cfajax-trigger').baldrick({
+					before			: function(el, ev){
 
-					var form	=	$(el),
-						buttons = 	form.find(':submit');
-					ev.preventDefault();
-					if( form.is( 'form' ) ){
+						var form	=	$(el),
+							buttons = 	form.find(':submit');
+						ev.preventDefault();
+						if( form.is( 'form' ) ){
 
-						var validate = form.parsley({
-							errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
-							errorTemplate : '<span></span>'
-						});
+							var validate = form.parsley({
+								errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
+								errorTemplate : '<span></span>'
+							});
 
-						if( !validate.isValid() ){
-							$(window).trigger('resize');
-							return false;
+							if( !validate.isValid() ){
+								$(window).trigger('resize');
+								return false;
+							}
 						}
-					}
-				},
-				callback : function( obj ){
-					var form;
-					if( obj.params.trigger.is( 'form' ) ){
-						form = obj.params.trigger;
-					}else{
-						form = obj.params.target.find( 'form.caldera_forms_form' );
-					}
-					if( form.length ){
-						var validate = form.parsley({
-							errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
-							errorTemplate : '<span></span>'
-						});
-					}
-					calders_forms_init_conditions();
+					},
+					callback : function( obj ){
+						var form;
+						if( obj.params.trigger.is( 'form' ) ){
+							form = obj.params.trigger;
+						}else{
+							form = obj.params.target.find( 'form.caldera_forms_form' );
+						}
+						if( form.length ){
+							var validate = form.parsley({
+								errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
+								errorTemplate : '<span></span>'
+							});
+						}
+						calders_forms_init_conditions();
 
-				}
-			});
+					}
+				});
+			}
 
 			window.Parsley.on('field:validated', function() {
 				setTimeout( function(){ $(window).trigger('resize') }, 10 );

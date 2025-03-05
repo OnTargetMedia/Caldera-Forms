@@ -1,5 +1,6 @@
 export function bindBaldrickTriggers($,adminAJAX) {
     return function () {
+      if ( $().baldrick ) {
         $('.ajax-trigger').baldrick({
             request: adminAJAX,
             method: 'POST',
@@ -33,5 +34,6 @@ export function bindBaldrickTriggers($,adminAJAX) {
                 });
             }
         });
+      };
     };
 };

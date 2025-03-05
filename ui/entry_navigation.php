@@ -4,7 +4,7 @@ function cf_set_limits( el ){
 	jQuery( el ).data('perpage', jQuery('#cf-entries-list-items').val() );
 }
 function cf_refresh_view(obj){
-	
+
 	jQuery('.entry_count_' + obj.params.trigger.data('form')).html(obj.rawData.total);
 	jQuery('.status_toggles[data-status="trash"] .current-status-count').html(obj.rawData.trash);
 	jQuery('.status_toggles[data-status="active"] .current-status-count').html(obj.rawData.total);
@@ -20,7 +20,7 @@ function setup_pagination(obj){
 
 	var total			= obj.rawData.total,
 		trash			= obj.rawData.trash,
-		active			= obj.rawData.active,		
+		active			= obj.rawData.active,
 		toggles			= jQuery('.status_toggles'),
 		exporter		= jQuery('.caldera-entry-exporter'),
 		tense			= ( total === 1 ? ' <?php _e('item'); ?>' : ' <?php _e('items'); ?>' ),
@@ -59,7 +59,7 @@ function setup_pagination(obj){
 		}
 	});
 	// update count
-	entry_count.html(active); 
+	entry_count.html(active);
 	//bulk-actions-active-tmpl
 
 	// add form id to toggles
@@ -69,7 +69,7 @@ function setup_pagination(obj){
 	if(pages <= 1){
 		page_links.hide();
 	}else{
-		page_links.show();		
+		page_links.show();
 	}
 	exporter.find('.caldera-forms-entry-exporter').attr('href', 'admin.php?page=caldera-forms&export=' + form);
 	exporter.show();
@@ -87,7 +87,7 @@ function setup_pagination(obj){
 		prev_page.addClass('disabled');
 	}else if(current === pages){
 		last_page.addClass('disabled');
-		next_page.addClass('disabled');		
+		next_page.addClass('disabled');
 	}
 
 	jQuery( 'html, body').animate({
@@ -102,49 +102,51 @@ function setup_pagination(obj){
 jQuery(function($){
 
 	init_cf_baldrick = function(){
-		$('.cfajax-trigger').baldrick({
-			before			: function(el, ev){
+		if ( $().baldrick ) {
+			$('.cfajax-trigger').baldrick({
+				before			: function(el, ev){
 
-				var form	=	$(el),
-					buttons = 	form.find(':submit');
-				ev.preventDefault();
-				if( form.is( 'form' ) ){
-					
-					var validate = form.parsley({
-						errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
-						errorTemplate : '<span></span>'
-					});
+					var form	=	$(el),
+						buttons = 	form.find(':submit');
+					ev.preventDefault();
+					if( form.is( 'form' ) ){
 
-					if( !validate.isValid() ){
-						$(window).trigger('resize');
-						return false;
+						var validate = form.parsley({
+							errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
+							errorTemplate : '<span></span>'
+						});
+
+						if( !validate.isValid() ){
+							$(window).trigger('resize');
+							return false;
+						}
 					}
+				},
+				callback : function( obj ){
+					var form;
+					if( obj.params.trigger.is( 'form' ) ){
+						form = obj.params.trigger;
+					}else{
+						form = obj.params.target.find( 'form.caldera_forms_form' );
+					}
+					if( form.length ){
+						var validate = form.parsley({
+							errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
+							errorTemplate : '<span></span>'
+						});
+					}
+					calders_forms_init_conditions();
 				}
-			},
-			callback : function( obj ){
-				var form;
-				if( obj.params.trigger.is( 'form' ) ){
-					form = obj.params.trigger;
-				}else{
-					form = obj.params.target.find( 'form.caldera_forms_form' );
-				}
-				if( form.length ){
-					var validate = form.parsley({
-						errorsWrapper : '<span class="help-block caldera_ajax_error_block"></span>',
-						errorTemplate : '<span></span>'
-					});
-				}
-				calders_forms_init_conditions();
-			}
-		});	
+			});
+		}
 
 		window.Parsley.on('field:validated', function() {
 			setTimeout( function(){ $(window).trigger('resize') }, 10 );
 		});
 	}
-	
+
 	function do_page_navigate(el){
-	
+
 		var clicked 		= $(el);
 
 		if(clicked.hasClass('disabled')){
@@ -157,7 +159,7 @@ jQuery(function($){
 			page_links		= pagenav.find('.pagination-links'),
 			total			= parseInt(pagenav.data('total'));
 
-		
+
 
 		if(clicked.data('page') === 'first'){
 			form_trigger.data('page', 1).trigger('click');
