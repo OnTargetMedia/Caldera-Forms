@@ -127,21 +127,21 @@ class Caldera_Forms_Admin {
 		// filter for adding presets
 		add_filter( 'caldera_forms_field_option_presets', array($this, 'load_option_presets' ) );
 
-		if( current_user_can( Caldera_Forms::get_manage_cap( 'create' ) ) ){
+		if ( current_user_can( Caldera_Forms::get_manage_cap( 'create' ) ) ){
 			// create forms
 			add_action("wp_ajax_create_form", array( $this, 'create_form') );
 			add_filter( 'upload_mimes', array( $this, 'custom_mime_types' ) );
 
 		}
 
-		if( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
+		if ( current_user_can( Caldera_Forms::get_manage_cap( 'admin' ) ) ) {
 			add_action( "wp_ajax_toggle_form_state", array( $this, 'toggle_form_state' ) );
 			add_action( "wp_ajax_save_cf_setting", array( $this, 'save_cf_setting' ) );
 			add_action( "wp_ajax_cf_dismiss_pointer", array( $this, 'update_pointer' ) );
 			add_action( "wp_ajax_cf_bulk_action", array( $this, 'bulk_action' ) );
 		}
 		add_action("wp_ajax_cf_get_form_preview", array( $this, 'get_form_preview') );
-        add_action( 'admin_footer', array( $this, 'add_shortcode_inserter'));
+    add_action( 'admin_footer', array( $this, 'add_shortcode_inserter'));
 
 		$this->addons = apply_filters( 'caldera_forms_get_active_addons', array() );
 
@@ -155,11 +155,11 @@ class Caldera_Forms_Admin {
 
 		add_action( 'init', array( 'Caldera_Forms_Admin_Resend', 'watch_for_resend' ) );
 
-        add_action( 'caldera_forms_admin_footer', array( 'Caldera_Forms_Email_Settings', 'ui' ) );
+    add_action( 'caldera_forms_admin_footer', array( 'Caldera_Forms_Email_Settings', 'ui' ) );
 
 		add_action(  'caldera_forms_admin_init', array( __CLASS__ , 'init_privacy_settings' ) );
 
-        add_action( 'admin_init', array( __CLASS__, 'add_suggested_privacy_content' ), 35 );
+    add_action( 'admin_init', array( __CLASS__, 'add_suggested_privacy_content' ), 35 );
 
 		/**
 		 * Runs after Caldera Forms admin is initialized
@@ -2123,7 +2123,7 @@ class Caldera_Forms_Admin {
 	 */
     public static function init_privacy_settings()
 	{
-        Caldera_Forms_Admin_Factory::menu_page('privacy', __('Privacy Settings', 'caldera-forms'), '<div id="caldera-forms-privacy-settings"></div>', [
+        Caldera_Forms_Admin_Factory::menu_page('privacy', 'Privacy Settings', '<div id="caldera-forms-privacy-settings"></div>', [
             'scripts' => [
                 'privacy',
                 'admin',

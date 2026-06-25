@@ -1,13 +1,16 @@
 <?php echo $wrapper_before; ?>
-	<?php echo $field_label; ?>
+	<?php if ( ! empty($field['config']['option']) ){
+		$field_label = preg_replace('/for="[^"]+"/', '', $field_label );
+	} echo $field_label;
+	?>
 	<?php echo $field_before; ?>
 		<?php
 
 		$req_class = '';
 		$parsley_req = '';
-		if( !empty( $field['required'] ) ){
+		if ( ! empty( $field['required'] ) ){
 			$req_class = ' option-required';
-			$parsley_req = 'data-parsley-required="true" data-parsley-group="' . esc_attr( $field_id ) . '" data-parsley-multiple="' . esc_attr( $field_id ). '"';
+			$parsley_req = 'required="required" data-parsley-group="' . esc_attr( $field_id ) . '" data-parsley-multiple="' . esc_attr( $field_id ). '"';
 		}
 
 		$field_value = Caldera_Forms_Field_Util::find_select_field_value( $field, $field_value );
@@ -17,10 +20,10 @@
 
 
 			foreach($field['config']['option'] as $option_key=>$option){
-				if(!isset($option['value'])){
+				if (!isset($option['value'])){
 					$option['value'] = $option['label'];
 				}
-				if( ! empty( $option['disabled'] ) ) {
+				if ( ! empty( $option['disabled'] ) ) {
 					$disabled[$option_key] = true;
 				}
 				?>
@@ -37,7 +40,7 @@
                                 data-label="<?php echo esc_attr($option['label']); ?>"
                                 data-field="<?php echo esc_attr($field_base_id); ?>"
                                 id="<?php echo esc_attr(Caldera_Forms_Field_Util::opt_id_attr($field_id, $option_key)); ?>"
-                                class="<?php echo $field_id . $req_class; ?>"
+                                class="<?php echo esc_attr( $field_id . $req_class ); ?>"
                                 name="<?php echo esc_attr($field_name); ?>[<?php echo esc_attr($option_key); ?>]"
                                 value="<?php echo esc_attr($option['value']); ?>"
                                 <?php if (Caldera_Forms_Field_Util::is_checked_option($option['value'], (array)$field_value)){ ?>checked="checked"<?php } ?>

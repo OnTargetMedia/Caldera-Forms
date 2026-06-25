@@ -2871,11 +2871,12 @@ class Caldera_Forms
 		global $referrer;
 
 		// clean out referrer
-		if (empty($_POST['_wp_http_referer_true'])) {
+		if (empty($_POST['_wp_http_referer_true']) && isset($_SERVER['HTTP_REFERER'])) {
 			$_POST['_wp_http_referer_true'] = $_SERVER['HTTP_REFERER'];
 		}
 
-		$referrer = parse_url($_POST['_wp_http_referer_true']);
+		$referrer = (isset( $_POST['_wp_http_referer_true'] ) ) ? parse_url($_POST['_wp_http_referer_true']) : null;
+
 		if (!empty($referrer['query'])) {
 			parse_str($referrer['query'], $referrer['query']);
 			if (isset($referrer['query']['cf_er'])) {
@@ -4080,26 +4081,26 @@ class Caldera_Forms
 	static public function render_field($field, $form = null, $entry_data = array(), $field_errors = array())
 	{
 		$current_form_count = Caldera_Forms_Render_Util::get_current_form_count();
-        $type = Caldera_Forms_Field_Util::get_type($field, $form);
-        $field_id_attr = Caldera_Forms_Field_Util::get_base_id($field, $current_form_count, $form);
-        if( Caldera_Forms_Field_Util::is_cf2_field_type($type)){
-            $form_id_attribute = $form['ID'] . '_' . $current_form_count;
-            $field['required'] = ! empty( $field['required'] ) ? true : false;
-            $field['caption'] = ! empty( $field['caption'] ) ? $field['caption'] : '';
-            $field['config']['default'] = isset($field['config']['default']) ? $field['config']['default'] : '';
-            $renderer = new \calderawp\calderaforms\cf2\Fields\RenderField($form_id_attribute,
-                array_merge( $field, [
-                    'fieldIdAttr' => $field_id_attr,
-                    'formIdAttr' => $form_id_attribute,
-                ]),
-                [
-                    'formId' => $form['ID'],
-                    'control' => uniqid( $type )
+    $type = Caldera_Forms_Field_Util::get_type($field, $form);
+    $field_id_attr = Caldera_Forms_Field_Util::get_base_id($field, $current_form_count, $form);
+    if( Caldera_Forms_Field_Util::is_cf2_field_type($type)){
+        $form_id_attribute = $form['ID'] . '_' . $current_form_count;
+        $field['required'] = ! empty( $field['required'] ) ? true : false;
+        $field['caption'] = ! empty( $field['caption'] ) ? $field['caption'] : '';
+        $field['config']['default'] = isset($field['config']['default']) ? $field['config']['default'] : '';
+        $renderer = new \calderawp\calderaforms\cf2\Fields\RenderField($form_id_attribute,
+            array_merge( $field, [
+                'fieldIdAttr' => $field_id_attr,
+                'formIdAttr' => $form_id_attribute,
+            ]),
+            [
+                'formId' => $form['ID'],
+                'control' => uniqid( $type )
 
-                ]
-            );
-            return $renderer->render();
-        }
+            ]
+        );
+        return $renderer->render();
+    }
 		$field_classes = Caldera_Forms_Field_Util::prepare_field_classes($field, $form);
 
 		$field_wrapper_class = implode(' ', $field_classes['control_wrapper']);
@@ -4125,17 +4126,14 @@ class Caldera_Forms
 			"name" => $field['ID'],//$field['slug'],
 			"wrapper_before" => "<div data-field-wrapper=\"" . $field['ID'] . "\" class=\"" . $field_wrapper_class . "\" id=\"" . $field_id_attr . "-wrap\">\r\n",
 			"field_before" => "<div class=\"" . $field_input_class . "\">\r\n",
-			"label_before" => "<label id=\"" . "{$field['ID']}_{$current_form_count}_" . "Label\" for=\"" . esc_attr( $field_id_attr ) . "\" class=\"" . implode(' ',
-					$field_classes['field_label']) . "\">",
+			"label_before" => "<label id=\"" . "{$field['ID']}_{$current_form_count}_" . "Label\" for=\"" . esc_attr( $field_id_attr ) . "\" class=\"" . implode(' ', $field_classes['field_label']) . "\">",
 			"label" => $field['label'],
-			"label_required" => (empty($field['hide_label']) ? (!empty($field['required']) ? " <span aria-hidden=\"true\" role=\"presentation\" class=\"" . implode(' ',
-					$field_classes['field_required_tag']) . "\" style=\"color:#ee0000;\">*</span>" : "") : null),
+			"label_required" => (empty($field['hide_label']) ? (!empty($field['required']) ? " <span aria-hidden=\"true\" role=\"presentation\" class=\"" . implode(' ', $field_classes['field_required_tag']) . "\" style=\"color:#ee0000;\">*</span>" : "") : null),
 			"label_after" => "</label>",
 			"field_placeholder" => (!empty($field['hide_label']) ? 'placeholder="' . htmlentities($field['label']) . '"' : null),
 			"field_required" => (!empty($field['required']) ? 'required="required"' : null),
 			"field_value" => null,
-			"field_caption" => (!empty($field['caption']) ? "<span id=\"" . $field['ID'] . "Caption\" class=\"" . implode(' ',
-					$field_classes['field_caption']) . "\">" . $field['caption'] . "</span>\r\n" : ""),
+			"field_caption" => (!empty($field['caption']) ? "<span id=\"" . $field['ID'] . "Caption\" class=\"" . implode(' ', $field_classes['field_caption']) . "\">" . $field['caption'] . "</span>\r\n" : ""),
 			"field_after" => "</div>\r\n",
 			"wrapper_after" => "</div>\r\n",
 			"aria" => array()

@@ -471,6 +471,9 @@ class Caldera_Forms_Render_Assets
 			if (false !== strpos($style, '//')) {
 				self::$enqueued[ 'styles' ][] = $slug;
 				wp_enqueue_style($slug, $style, [], CFCORE_VER);
+				if ( ! wp_is_serving_rest_request() && ! is_admin() ) {
+					echo '<link rel="preload" as="style" href="' . esc_url($style) . '?ver=' . CFCORE_VER . '">';
+				}
 
 			} else {
 				if (wp_style_is($style, 'registered')) {

@@ -99,7 +99,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 				$skip = array(
 					'star_rating',
 				);
-				if( $type && ! in_array( $type, $skip ) && method_exists( $this, $type ) ){
+				if ( ! in_array( $type, $skip ) && method_exists( $this, $type ) ){
 					call_user_func( array( $this, $type ), $field[ 'ID' ], $field );
 				}
 			}
@@ -814,8 +814,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	 * @return string
 	 */
 	protected function get_field_type( $field ){
-		if ( ! $this->types ) return;
-
+		if ( empty( $this->types ) ) $this->types = array() ;
 		if( ! isset( $this->types[ $field[ 'ID' ] ] ) ){
 			$this->types[ $field[ 'ID' ] ] = Caldera_Forms_Field_Util::get_type( $field, $this->form );
 		}

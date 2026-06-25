@@ -19,7 +19,14 @@ class Caldera_Forms_API_Tokens implements Caldera_Forms_API_Route {
 	public function add_routes( $namespace ) {
 		register_rest_route( $namespace, '/tokens/form',
 			array(
-				'methods'         => 'post',
+				'methods'         => 'GET',
+				'callback'        => '__return_false',
+			  'permission_callback' => '__return_false',
+			)
+		);
+		register_rest_route( $namespace, '/tokens/form',
+			array(
+				'methods'         => 'POST',
 				'callback'        => array( $this, 'get_new_nonce' ),
 			  'permission_callback' => '__return_true',
 				'args'            => array(
@@ -64,6 +71,5 @@ class Caldera_Forms_API_Tokens implements Caldera_Forms_API_Route {
 			'nonce' => $nonce,
 		) );
 		return $response;
-
 	}
 }
