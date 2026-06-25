@@ -153,15 +153,15 @@ class Caldera_Forms_Field_Input extends Caldera_Forms_Field_HTML{
  		$attrs = '';
  		if ( 'phone' != Caldera_Forms_Field_Util::get_type( $field ) ) {
  			if ( ! empty( $field[ 'config' ][ 'masked' ] ) ) {
- 				$mask = $field[ 'config' ][ 'mask' ];
- 				return "data-inputmask=\"'mask': '" . $mask . "'\" ";
+ 				$mask = esc_attr( $field[ 'config' ][ 'mask' ] );
+				return "pattern=\"$mask\" data-inputmask-regex=\"$mask\"";
  			}
  		} else {
  			$mask = '\([0-9]{3}\) [0-9]{3}-[0-9]{4}';
- 			if( $field['config']['type'] == 'international' ){
+ 			if ( $field['config']['type'] == 'international' ){
  				$mask = '\+[0-9]{2} [0-9]{2} [0-9]{3} [0-9]{4}';
- 			}elseif ( $field['config']['type'] == 'custom' ) {
- 				$mask = $field['config']['custom'];
+ 			} elseif ( $field['config']['type'] == 'custom' ) {
+ 				$mask = esc_attr( $field['config']['custom'] );
  			}
  			return "pattern=\"$mask\" data-inputmask-regex=\"$mask\"";
  		}

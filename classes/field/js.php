@@ -87,7 +87,7 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	 */
 	public function prepare_data(){
 
-		if( ! empty( $this->form[ 'fields' ] ) ){
+		if ( ! empty( $this->form[ 'fields' ] ) ){
 			foreach( $this->form[ 'fields' ] as  $field ){
 				$this->fields[ 'ids' ][] = $this->field_id( $field[ 'ID' ] );
 				$type = $this->get_field_type( $field );
@@ -105,20 +105,15 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 			}
 
 			foreach( $this->fields[ 'defaults' ] as &$default ){
-				if( !is_array( $default ) && 0 === strpos( $default, '%' ) ){
+				if ( $default && ! is_array( $default ) && 0 === strpos( $default, '%' ) ){
 					$default = $this->get_field_default(
 						Caldera_Forms_Field_Util::get_field_by_slug( str_replace( '%', '', $default ), $this->form )
 					);
-				}else{
+				} else {
 					$default = Caldera_Forms::do_magic_tags( $default, null, $this->form );
-
 				}
-
 			}
-
 		}
-
-
 	}
 
 
@@ -814,11 +809,10 @@ class Caldera_Forms_Field_JS implements JsonSerializable {
 	 * @return string
 	 */
 	protected function get_field_type( $field ){
-		if ( empty( $this->types ) ) $this->types = array() ;
-		if( ! isset( $this->types[ $field[ 'ID' ] ] ) ){
+		if ( empty( $field[ 'ID' ] ) ) return false;
+		if ( ! isset( $this->types[ $field[ 'ID' ] ] ) ){
 			$this->types[ $field[ 'ID' ] ] = Caldera_Forms_Field_Util::get_type( $field, $this->form );
 		}
-
 		return $this->types[ $field[ 'ID' ] ];
 	}
 }

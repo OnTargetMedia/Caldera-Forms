@@ -1,4 +1,4 @@
-/*! GENERATED SOURCE FILE caldera-forms - v1.11.5 - 2026-06-24 *//**
+/*! GENERATED SOURCE FILE caldera-forms - v1.11.6 - 2026-06-25 *//**
  * API Client for Caldera Forms API for a single form
  *
  * @since 1.5.0

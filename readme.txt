@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos, andrewza, nahuelmahe
 Tags: form, contact form, forms, form creator, form manager, mailchimp, paypal, stripe, login, payment, forms manager, forms creation
 Requires at least: 5.2
 Tested up to: 5.4.2
-Stable tag: 1.11.5
+Stable tag: 1.11.6
 License: GPLv2
 Requires PHP: 5.6
 
@@ -212,14 +212,14 @@ Yes, we have many options for sending emails on each submission of your form. Ca
 
 = Does Caldera Forms Have Documentation? =
 
-Yes it does. Our [documentation can be searched here](https://calderaforms.com/documentation/caldera-forms-documentation/). Â 
+Yes it does. Our [documentation can be searched here](https://calderaforms.com/documentation/caldera-forms-documentation/). Â
 
 
 = Why Is Caldera Form So Awesome? Seriously, Even Its Free Version Has So Many Great Features! =
 
 Because we are awesome:) Â  We set out to make a different kind of WordPress form builder.
 
-It's no secret that there are a lot of established leaders in this field. But we think that by starting with no conceptions of what a WordPress form builder should be or how it works, we were able to make something special. Â  We strive to provide a solid core product that can be used for free in hopes that you will use it, and think it is awesome. If you would like to support our work please consider purchasing one of our [Caldera Forms add-ons](https://calderaforms.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms), a [cost-saving Caldera Forms bundles](https://calderaforms.com/caldera-forms-bundles/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) or one of our other fine WordPress plugins including [Easy Pods](https://calderaforms.com/downloads/caldera-easy-pods/), [Easy Queries](https://calderaforms.com/downloads/caldera-easy-queries/) and [Ingot](https://IngotHQ.com). Â 
+It's no secret that there are a lot of established leaders in this field. But we think that by starting with no conceptions of what a WordPress form builder should be or how it works, we were able to make something special. Â  We strive to provide a solid core product that can be used for free in hopes that you will use it, and think it is awesome. If you would like to support our work please consider purchasing one of our [Caldera Forms add-ons](https://calderaforms.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms), a [cost-saving Caldera Forms bundles](https://calderaforms.com/caldera-forms-bundles/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) or one of our other fine WordPress plugins including [Easy Pods](https://calderaforms.com/downloads/caldera-easy-pods/), [Easy Queries](https://calderaforms.com/downloads/caldera-easy-queries/) and [Ingot](https://IngotHQ.com). Â
 
 = How Can I Send an Email to More Than One Person?  =
 
@@ -233,19 +233,19 @@ There are a lot of ways to send more than one email with Caldera Forms.
 
 Â Form submission tracking in your WordPress database, is a core feature of Caldera Forms.
 
- Tracking the entries from your forms is turned on for forms by default. You can turn it off from the settings tab of the form editor. When enabled all form entry data, with certain exceptions -- such as credit card numbers -- for security reasons, is saved. Â  You can view this information from the Caldera Forms admin page. You may optionally enable, form the form settings tab, a sub-menu page of the Caldera Forms menu page that will show entry data. You can choose to make these sub-menu pages available to users of other roles besides admins. Â 
+ Tracking the entries from your forms is turned on for forms by default. You can turn it off from the settings tab of the form editor. When enabled all form entry data, with certain exceptions -- such as credit card numbers -- for security reasons, is saved. Â  You can view this information from the Caldera Forms admin page. You may optionally enable, form the form settings tab, a sub-menu page of the Caldera Forms menu page that will show entry data. You can choose to make these sub-menu pages available to users of other roles besides admins. Â
 
 = Can You Use Caldera Forms to Create a Event Registration Form? =
 
-Â Oh yes you can. Caldera forms is excellent for this if you need to accept payments for the event, you can use one of our [many payment processors](https://calderaforms.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). If you need to register users, you can use our [users add-on](https://calderaforms.com/downloads/caldera-forms-users-add?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). Â 
+Â Oh yes you can. Caldera forms is excellent for this if you need to accept payments for the event, you can use one of our [many payment processors](https://calderaforms.com/caldera-forms-add-ons?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). If you need to register users, you can use our [users add-on](https://calderaforms.com/downloads/caldera-forms-users-add?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms). Â
 
 = Can I Use Caldera Forms For Front-end Editing Of Users? =
 
-Yes, you can. Our [users add-on](https://calderaforms.com/downloads/caldera-forms-users-add?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) can register users, login users and even be used to edit user profiles. [Matt Cromwell](https://www.mattcromwell.com/) has [an excellent tutorial](https://www.mattcromwell.com/building-front-end-profile-editor-caldera-forms/) on using Caldera Forms for front-end editing of user profiles. Â 
+Yes, you can. Our [users add-on](https://calderaforms.com/downloads/caldera-forms-users-add?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms) can register users, login users and even be used to edit user profiles. [Matt Cromwell](https://www.mattcromwell.com/) has [an excellent tutorial](https://www.mattcromwell.com/building-front-end-profile-editor-caldera-forms/) on using Caldera Forms for front-end editing of user profiles. Â
 
 = Can I Use Caldera Forms For Front-end Editing Of Posts? =
 
-Yes, you can. Our plugin [Caldera Custom Fields ](https://calderaforms.com/downloads/caldera-form-metabox?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)allows you to use Caldera Forms to edit or create posts of any post type, and their custom fields. [Mike Hemberger](http://thestizmedia.com) has an [excellent post on creating a WordPress front-end editor with Caldera Forms](http://thestizmedia.com/front-end-post-editing-with-caldera-forms/). Â 
+Yes, you can. Our plugin [Caldera Custom Fields ](https://calderaforms.com/downloads/caldera-form-metabox?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms)allows you to use Caldera Forms to edit or create posts of any post type, and their custom fields. [Mike Hemberger](http://thestizmedia.com) has an [excellent post on creating a WordPress front-end editor with Caldera Forms](http://thestizmedia.com/front-end-post-editing-with-caldera-forms/). Â
 
 = Does Caldera Form Support Multi Page Forms? =
 
@@ -900,10 +900,10 @@ See: [https://calderaforms.com/updates/caldera-forms-1-8-4](https://calderaforms
 = Caldera Forms 1.8.3 (March 19, 2019) WeGlot support, React + legacy-bundle for WP < 5  =
 See: [https://calderaforms.com/updates/caldera-forms-1-8-3](https://calderaforms.com/updates/caldera-forms-1-8-3?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms&utm_term=1-8-3)
 * ADDED: Weglot Support https://calderaforms.com/2019/03/translate-wordpress-site-weglot/
-* ADDED: Link from edition page/post Gutenberg block to Form editor page 
+* ADDED: Link from edition page/post Gutenberg block to Form editor page
 * FIXED: CF2 File field multiple files attachments
 * FIXED: CF2 File field for WordPress versions older than 5.0
-* FIXED: Prevent js errors when no cf2 field is in the form during submission event 
+* FIXED: Prevent js errors when no cf2 field is in the form during submission event
 * FIXED: Conditional disabled
 * FIXED: Toggle switch field not initialized properly
 
